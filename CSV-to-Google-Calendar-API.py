@@ -1,12 +1,9 @@
 import openpyxl as xl
 from openpyxl import Workbook, load_workbook
 import pyexcel as p
-import pyexcel_xls
-import pyexcel_xlsx
 from datetime import datetime
 import pandas as pd
 import os
-import time
 from win32com.client import Dispatch
 import pickle
 import datetime
@@ -31,7 +28,6 @@ def create_service(client_secret_file, api_name, api_version, *scopes, prefix=''
 	# check if token dir exists first, if not, create the folder
 	if not os.path.exists(os.path.join(working_dir, token_dir)):
 		os.mkdir(os.path.join(working_dir, token_dir))
-
 	if os.path.exists(os.path.join(working_dir, token_dir, pickle_file)):
 		with open(os.path.join(working_dir, token_dir, pickle_file), 'rb') as token:
 			cred = pickle.load(token)
@@ -45,6 +41,7 @@ def create_service(client_secret_file, api_name, api_version, *scopes, prefix=''
 
 		with open(os.path.join(working_dir, token_dir, pickle_file), 'wb') as token:
 			pickle.dump(cred, token)
+
 	try:
 		service = build(API_SERVICE_NAME, API_VERSION, credentials=cred)
 		print(API_SERVICE_NAME, API_VERSION, 'service created successfully')
@@ -75,7 +72,7 @@ service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 calendar_list = service.calendarList().list(pageToken=None).execute()
 
 
-# delete already existing calendar                  ## COMPLETELY OPTIONAL!!!!
+# delete already existing calendar               ### COMPLETELY OPTIONAL - feel free to comment!!!!
 for calendar_list_entry in calendar_list['items']:  
     if 'CALENDAR_NAME' in calendar_list_entry['summary']:
         id = calendar_list_entry['id'] 
@@ -100,9 +97,10 @@ for calendar_list_entry in calendar_list['items']:
         id = calendar_list_entry['id'] 
 
 
-boolean = None
+
 # insert events to google calendar function
 def insert_events(color):
+    # validate if it is an all-day event or not
     def is_all_day_event():
         if "FALSE" in all_day_event[i]:
             return False
@@ -126,7 +124,7 @@ def insert_events(color):
                 'description': description[i],
                 'location': location[i],
                 'colorId': color,
-                'visibility': private[i]
+                'visibility': is_private[i]
                 #'attendees':[
                 #    {
                 #        'email': '',
@@ -159,7 +157,7 @@ def insert_events(color):
             'description': description[i],
             'location': location[i],
             'colorId': color,
-            'visibility': private[i]
+            'visibility': is_private[i]
             #'attendees':[
             #    {
             #        'email': '',
@@ -176,19 +174,18 @@ def insert_events(color):
             }
             service.events().insert(calendarId=id, body=event_request_body).execute()
 
-    
-
 all_day_event_true_start = []
 all_day_event_true_end = []
 
+
+
 # load xlsx file containing the events
-wb = load_workbook('excel_file3.xlsx')
+wb = load_workbook('excel_file.xlsx')
 ws = wb.active
 
 
 # row number variable
 max_rows = ws.max_row-1
-
 
 
 # copy subject
@@ -289,11 +286,11 @@ for i in range(0,max_rows):
 
 
 
-
 # copy description
 description = []
 for i in range(2,max_rows+2):
     description.append(ws.cell(row = i, column = 7).value)
+
 
 
 # copy location
@@ -302,18 +299,18 @@ for i in range(2,max_rows+2):
     location.append(ws.cell(row = i, column = 8).value)
 
 
+
 # copy private
-private = []
+is_private = []
 for i in range(2,max_rows+2):
-    private.append(ws.cell(row = i, column = 9).value)
+    is_private.append(ws.cell(row = i, column = 9).value)
 for i in range(0,max_rows):
-    private[i] = private[i].upper()
-    if "TRUE" in private[i]:
-        private[i] = "private"
+    is_private[i] = is_private[i].upper()
+    if "TRUE" in is_private[i]:
+        is_private[i] = "private"
     else:
-        private[i] = "default"
+        is_private[i] = "default"
 
 
-
-# insert events
-insert_events(7)    
+# insert events(color) ---> check available colors here => https://lukeboyle.com/blog/posts/google-calendar-api-color-id
+insert_events(11)    
