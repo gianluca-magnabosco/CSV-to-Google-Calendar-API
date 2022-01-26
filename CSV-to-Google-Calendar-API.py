@@ -57,7 +57,7 @@ def convert_to_RFC_datetime(start_year=1900, start_month=1, start_day=1, hour=0,
 	dt = datetime.datetime(start_year, start_month, start_day, hour, minute, 0).isoformat() + 'Z'
 	return dt
 
-"""
+
 # launch api
 CLIENT_SECRET_FILE = "client_secret.json"      ################ do not forget to download OAuth json file and put it in current directory!!!!!!!!!!
 API_NAME = 'calendar'
@@ -175,14 +175,13 @@ def insert_events(color):
 
 all_day_event_true_start = []
 all_day_event_true_end = []
-"""
+
 
 
 # convert csv file to excel
 if not os.path.exists('excel_file.xlsx'):
-    read_file = pd.read_csv('csv_file.csv', encoding='latin1')
-    read_file.to_excel('excel_file2.xlsx', index = None, header = True)
-
+    read_file = pd.read_csv('csv_file.csv')                   # YOU MAY NEED TO DECLARE THE SPECIFIC ENCODING -> https://docs.python.org/3.7/library/codecs.html#standard-encodings
+    read_file.to_excel('excel_file.xlsx', index = None, header = True)
 
 
 
@@ -322,4 +321,4 @@ for i in range(0,max_rows):
 
 
 # insert events(color) ---> check available colors here => https://lukeboyle.com/blog/posts/google-calendar-api-color-id
-#insert_events(11)    
+insert_events(11)    
