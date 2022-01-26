@@ -1,9 +1,10 @@
 # CSV and Excel formatted file importer to Google Calendar, via API
-This script will create a calendar, and insert all of the events present on the [excel/csv formatted file](https://github.com/gianluca-magnabosco/CSV-to-Google-Calendar-API/blob/main/csv_file.csv), taking into consideration all possible outcomes from its parameters, such as Subject name, Start Date, All Day Event, Location, Private, etc. </br>
+This script will create a calendar, and insert all of the events present on the [excel/csv formatted file](https://github.com/gianluca-magnabosco/CSV-to-Google-Calendar-API/blob/main/csv_file.csv), taking into consideration all possible outcomes from its parameters, such as `Subject`, `Start Date`, `All Day Event`, `Location`, `Private`, etc. </br>
+
 `There is an example of the formatted file just down below. ↓` </br>
 
-If you have been using Google Calendar and came across the `Import CSV` option, but couldn't automate the insertion of events through a CSV file using the Google Calendar API, this script might help you!
-> If you have an excel file that is formatted in the same way don't worry, the script will work!
+If you have been using Google Calendar and came across the `Import CSV` option, but couldn't automate the insertion of events through a `.csv` file using the Google Calendar API, this [script](https://github.com/gianluca-magnabosco/CSV-to-Google-Calendar-API/blob/main/CSV-to-Google-Calendar-API.py) might help you!
+> If you have an excel file that is formatted in the same way, don't worry, the script will work!
 
 In order for the events to be successfully inserted, you'll need to get your `client_secret.json` file from the Google Cloud Platform, if you scroll down a little you can find a  guide on how to get your secret file ↓↓↓.
 ### On this repository there are two sample files, they contain the same data, but are in two different formats:
