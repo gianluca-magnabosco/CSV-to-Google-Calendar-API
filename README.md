@@ -6,7 +6,14 @@ This script will create a calendar, and insert all of the events present on the 
 If you have been using Google Calendar and came across the `Import CSV` option, but couldn't automate the insertion of events through a `.csv` file using the Google Calendar API, this [script](https://github.com/gianluca-magnabosco/CSV-to-Google-Calendar-API/blob/main/CSV-to-Google-Calendar-API.py) might help you!
 > If you have an excel file that is formatted in the same way, don't worry, the script will work!
 
+##
+</br>
+
 In order for the events to be successfully inserted, you'll need to get your `client_secret.json` file from the Google Cloud Platform, if you scroll down a little you can find a  guide on how to get your secret file ↓↓↓.
+
+##
+
+
 ### On this repository there are two sample files, they contain the same data, but are in two different formats:
 
 ![Sample File](https://media.discordapp.net/attachments/555940526554218496/935920316654420018/aasdadas.png?width=819&height=559)
@@ -14,7 +21,8 @@ In order for the events to be successfully inserted, you'll need to get your `cl
 
 
 
-
+##
+</br >
 
 ## Instructions - Getting your client_secret.json file!
 ### Before you run the script, you'll need to get your `client_secret.json` file, you can do that by signing into the Google Cloud Platform:
