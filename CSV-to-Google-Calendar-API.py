@@ -100,16 +100,16 @@ for calendar_list_entry in calendar_list['items']:
 # insert events to google calendar function
 def insert_events(color):
     # validate if it is an all-day event or not
-    def is_all_day_event():
-        if "FALSE" in all_day_event[i]:
+    def is_all_day_event(i):
+        if ("FALSE" or "False" or "false") in all_day_event[i]:
             return False
         else:
             return True
     x = 0
-    for i in range(0,max_rows):
-        if is_all_day_event():
-            all_day_event_true_start.append("{}-{}-{}".format(start_year[i],start_month[i],start_day[i]))
-            all_day_event_true_end.append("{}-{}-{}".format(end_year[i],end_month[i],end_day[i]))
+    for i in range(0, max_rows):
+        if is_all_day_event(i):
+            all_day_event_true_start.append("{}-{}-{}".format(start_year[i], start_month[i], start_day[i]))
+            all_day_event_true_end.append("{}-{}-{}".format(end_year[i], end_month[i], end_day[i]))
             event_request_body = {
                 'start':{
                     'date': all_day_event_true_start[x],
@@ -199,7 +199,7 @@ max_rows = ws.max_row
 
 # copy subject
 subject = []
-for i in range(1,max_rows+1):
+for i in range(1, max_rows+1):
     subject.append(ws.cell(row = i, column = 1).value)
 
 
@@ -207,7 +207,7 @@ for i in range(1,max_rows+1):
 ## FORMATTING START DATE
 # copy start date
 start_date = []
-for i in range(1,max_rows+1):
+for i in range(1, max_rows+1):
     start_date.append(ws.cell(row = i, column = 2).value)
 
 # append lists
@@ -216,7 +216,7 @@ start_day = []
 start_year = []
 
 # format start month, day & year
-for i in range(0,max_rows):
+for i in range(0, max_rows):
     start_month.append(start_date[i])
     start_day.append(start_date[i])
     start_year.append(start_date[i])
@@ -230,12 +230,12 @@ start_year = ['20' + x[6:] for x in start_year]
 ## FORMATTING START TIME
 # copy start time
 start_time = []
-for i in range(1,max_rows+1):
+for i in range(1, max_rows+1):
     start_time.append(ws.cell(row = i, column = 3).value)
 
 # format start time
 fstart_time = []
-for i in range(0,max_rows):
+for i in range(0, max_rows):
     fstart_time.append(start_time[i])
 fstart_time = [x[:-3] for x in fstart_time]
 
@@ -245,7 +245,7 @@ fstart_time = [x[:-3] for x in fstart_time]
 ## FORMATTING END DATE
 # copy end date
 end_date = []
-for i in range(1,max_rows+1):
+for i in range(1, max_rows+1):
     end_date.append(ws.cell(row = i, column = 4).value)
 
 # append lists
@@ -254,7 +254,7 @@ end_day = []
 end_year = []
 
 # format end month, day & year
-for i in range(0,max_rows):
+for i in range(0, max_rows):
     end_month.append(end_date[i])
     end_day.append(end_date[i])
     end_year.append(end_date[i])
@@ -269,12 +269,12 @@ end_year = ['20' + x[6:] for x in end_year]
 ## FORMATTING END TIME
 # copy end time
 end_time = []
-for i in range(1,max_rows+1):
+for i in range(1, max_rows+1):
     end_time.append(ws.cell(row = i, column = 5).value)
 
 # format end time
 fend_time = []
-for i in range(0,max_rows):
+for i in range(0, max_rows):
     fend_time.append(end_time[i])
 fend_time = [x[:-3] for x in fend_time]
 
@@ -283,38 +283,38 @@ fend_time = [x[:-3] for x in fend_time]
 
 # copy all-day event 
 all_day_event = []
-for i in range(1,max_rows+1):
+for i in range(1, max_rows+1):
     all_day_event.append(ws.cell(row = i, column = 6).value)
 
-# padronize all possible letter case options (by uppercasing them all)
-for i in range(0,max_rows):
+
+for i in range(0, max_rows):
     all_day_event[i] = all_day_event[i].upper()
 
 
 
 # copy description
 description = []
-for i in range(1,max_rows+1):
+for i in range(1, max_rows+1):
     description.append(ws.cell(row = i, column = 7).value)
 
 
 
 # copy location
 location = []
-for i in range(1,max_rows+1):
+for i in range(1, max_rows+1):
     location.append(ws.cell(row = i, column = 8).value)
 
 
 
 # copy private
 is_private = []
-for i in range(1,max_rows+1):
+for i in range(1, max_rows+1):
     is_private.append(ws.cell(row = i, column = 9).value)
 
 # adapt private to fit json
-for i in range(0,max_rows):
+for i in range(0, max_rows):
     is_private[i] = is_private[i].upper()
-    if "TRUE" in is_private[i]:
+    if ("TRUE" or "True" or "true") in is_private[i]:
         is_private[i] = "private"
     else:
         is_private[i] = "default"
@@ -322,3 +322,5 @@ for i in range(0,max_rows):
 
 # insert events(color) ---> check available colors here => https://lukeboyle.com/blog/posts/google-calendar-api-color-id
 insert_events(11)    
+
+
